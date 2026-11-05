@@ -1,0 +1,25 @@
+name: unit
+on:
+  pull_request:
+    paths: ['lib/**', 'src/**', 'test/**', 'config/**', 'mix.*', 'Project.toml', 'Manifest.toml', 'scripts/**', 'Makefile', '.formatter.exs', '.github/workflows/**']
+concurrency:
+  group: unit-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+permissions:
+  contents: read
+jobs:
+  test:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.14'
+      - uses: julia-actions/setup-julia@v3
+        with:
+          version: '1.13.3'
+      - run: julia --project=. --startup-file=no -e 'using Pkg; Pkg.instantiate()'
+      - run: make test
+        env:
+          JULIA_NUM_THREADS: '4'
