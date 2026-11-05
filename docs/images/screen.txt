@@ -1,0 +1,8 @@
+ARC LANDING | WON
+Land within 30 +/- 2 metres in 3 throws | throws 2/3
+
+launch ----------- [ target: 28 .. 32 m ]
+
+Landed 29.46 m | ON TARGET
+
+Enter speed(m/s) angle(deg), e.g. 17 45 | q: quit

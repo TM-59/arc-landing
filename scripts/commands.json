@@ -1,0 +1,19 @@
+{
+  "repository": "TM-59/arc-landing",
+  "language": "Julia",
+  "unit": [
+    "julia",
+    "--project=.",
+    "--startup-file=no",
+    "-e",
+    "using TestReports; TestReports.test(; logfilepath=ENV[\"RESULT_DIR\"], logfilename=\"unit.xml\")"
+  ],
+  "play": [
+    "julia",
+    "--project=.",
+    "--startup-file=no",
+    "-e",
+    "using ArcLanding; play()"
+  ],
+  "demo": "10 45\n17 45\n"
+}
