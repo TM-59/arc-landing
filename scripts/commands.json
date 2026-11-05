@@ -15,5 +15,5 @@
     "-e",
     "using ArcLanding; play()"
   ],
-  "demo": "10 45\n17 45\n"
+  "demo": "10 45\n16.5 45\n"
 }

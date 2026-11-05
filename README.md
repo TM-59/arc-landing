@@ -1,8 +1,8 @@
 # Arc Landing
 
-Choose a launch speed and angle to land within **30 ± 2 metres**, in at most three throws. Enter two numbers such as **17 45**. The result shows whether you landed short, long or on target. **q** or EOF exits; invalid input consumes no throw.
+Choose speed and angle to land within **30 ± 2 metres**, in at most three throws. Enter two numbers such as **16.5 45**. The result shows whether you landed short, long or on target, with an ASCII trajectory. **q** or EOF exits; invalid input consumes no throw.
 
-Julia calculates range, flight time and peak height from the analytic flat-ground projectile equations, with gravity 9.81 m/s² and no air resistance. M1 is a small numeric aiming game; wind, a trajectory plot and campaign are future work.
+Wind is a constant **+1.2 m/s² horizontal acceleration** to the right. Julia integrates motion with fixed-step velocity Verlet (at most 0.02 seconds per step) and interpolates the ground crossing. Gravity is 9.81 m/s², without drag. The exact no-wind equations remain as `flight` for comparison; `trajectory` accepts wind and step size for experiments. This is an aiming model, not a weather simulation.
 
 ![Actual CLI output](docs/images/play.png)
 
@@ -16,9 +16,9 @@ Linux x86-64, no sudo or containers. Install the current stable runtime as check
 curl -fLO https://julialang-s3.julialang.org/bin/linux/x64/1.13/julia-1.13.3-linux-x86_64.tar.gz
 curl -fLO https://julialang-s3.julialang.org/bin/checksums/julia-1.13.3.sha256
 awk '$2 == "julia-1.13.3-linux-x86_64.tar.gz"' julia-1.13.3.sha256 | sha256sum -c -
-mkdir -p "$HOME/.tools"
-tar xzf julia-1.13.3-linux-x86_64.tar.gz -C "$HOME/.tools"
-export PATH="$HOME/.tools/julia-1.13.3/bin:$PATH"
+mkdir -p "$HOME/.local"
+tar xzf julia-1.13.3-linux-x86_64.tar.gz -C "$HOME/.local"
+export PATH="$HOME/.local/julia-1.13.3/bin:$PATH"
 julia --project=. --startup-file=no -e 'using Pkg; Pkg.instantiate()'
 ```
 
@@ -33,6 +33,6 @@ make check
 
 `test` runs native unit tests; `check` also drives a real CLI victory. JUnit XML and schema-versioned summary JSON go to ignored `test-results/`. No test contacts a live service. PR CI runs unit checks only.
 
-M2 and M3 are separate milestones. Terminal accessibility, Windows and macOS execution, long sessions and player enjoyment are unverified.
+M2 is implemented; M3 remains a separate milestone. Terminal accessibility, Windows and macOS execution, long sessions and player enjoyment are unverified.
 
-Verified on Linux: 14 native Test results + 1 CLI smoke, all passing. See [requirements](docs/requirements.md).
+Verified on Linux: 83 native Test results + 1 CLI smoke, all passing. See [requirements](docs/requirements.md).
