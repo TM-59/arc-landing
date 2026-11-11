@@ -9,7 +9,7 @@ Why the program is correct, from the repository alone: every law, numerical rule
 ## Pages
 
 1. [The throw: projectile motion and how it is computed](01-projectile.md) — closed-form range, time and apex; the wind; the exact step; the interpolated landing and its error; the shortened step
-2. [The game: target, turns, input and the screen](02-game.md) — the hit rule and the three throws, input validation, the character plot
+2. [The game: target, turns, input, the screen and the levels](02-game.md) — the hit rule and the three throws, input validation, the character plot, the five seeded levels with retry and next
 
 ## How the pieces depend on each other
 
@@ -25,6 +25,9 @@ flowchart TD
     S07 --> S06
     S03 --> S08["S08 the picture from measured points"]
     S06 --> S08
+    S06 --> S09["S09 five seeded levels; retry and next start clean"]
+    S02 --> S09
+    S07 --> S09
 ```
 
 ## Coverage: statement → page → figure → code → test
@@ -36,14 +39,15 @@ flowchart TD
 | S03 | The step is exact for constant acceleration | [1](01-projectile.md) | `figures/points.svg` | `src/ArcLanding.jl#trajectory` | `scripts/theory_figs.jl#points-on-path` |
 | S04 | Linear interpolation of the landing; error of order dt² | [1](01-projectile.md) | `figures/landing-error.svg` | `src/ArcLanding.jl#fraction` | `test/runtests.jl#REQ-wind numeric integration and convergence`, `scripts/theory_figs.jl#landing-order` |
 | S05 | The step is at most the time to the apex | [1](01-projectile.md) | mermaid | `src/ArcLanding.jl#dt = min(dt, vy / 9.81)` | `scripts/theory_figs.jl#shallow-points` |
-| S06 | The target 28–32 m and the three throws | [2](02-game.md) | `figures/target.svg`, mermaid | `src/ArcLanding.jl#hit`, `src/ArcLanding.jl#shoot` | `test/runtests.jl#REQ-finish win, miss, freeze and input recovery` |
+| S06 | The target c ± h (28–32 m on level 1), the three throws and the reason line | [2](02-game.md) | `figures/target.svg`, mermaid | `src/ArcLanding.jl#hit`, `src/ArcLanding.jl#shoot`, `src/ArcLanding.jl#reason` | `test/runtests.jl#REQ-finish win, miss, freeze and input recovery` |
 | S07 | Input validation | [2](02-game.md) | mermaid | `src/ArcLanding.jl#parameters`, `src/ArcLanding.jl#play` | `test/runtests.jl#REQ-input finite bounded parameters` |
 | S08 | The picture is drawn from the measured points | [2](02-game.md) | mermaid | `src/ArcLanding.jl#plot`, `src/ArcLanding.jl#screen` | `test/runtests.jl#REQ-input trajectory bounds and target boundaries` |
+| S09 | Five placements from a fixed seed, all reachable; retry and next start clean | [2](02-game.md) | `figures/levels.svg`, mermaid | `src/ArcLanding.jl#levels`, `src/ArcLanding.jl#restart`, `src/ArcLanding.jl#next_level`, `src/ArcLanding.jl#mix` | `test/runtests.jl#REQ-level fixed-seed placements, all reachable inside the input range`, `test/runtests.jl#REQ-retry nothing of the previous attempt remains` |
 
 Tests named `scripts/theory_figs.jl#…` are measurements recorded in [figures/values.md](figures/values.md) by `make theory-figs`, not assertions of `make test`. S03 and S05 are covered only that way.
 
 ## Reading the source against this table
 
-Functions reviewed for this handbook: all of `src/ArcLanding.jl` — the exported `flight`, `trajectory`, `shoot`, `screen`, `play` and the internal `parameters`, `hit`, `plot` and the `Game` struct.
+Functions reviewed for this handbook: all of `src/ArcLanding.jl` — the exported `flight`, `trajectory`, `shoot`, `screen`, `play`, `levels`, `restart`, `next_level` and the internal `parameters`, `hit`, `finished`, `reason`, `mix`, `plot`, the `Level` and `Game` structs.
 
 The program is unchanged by this handbook: it adds `scripts/theory_figs.jl`, `scripts/theory-check.py`, two Makefile targets and these pages.

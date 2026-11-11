@@ -1,0 +1,109 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 400" width="720" height="400" font-family="sans-serif" font-size="12">
+<rect width="720" height="400" fill="#ffffff"/>
+<text x="70" y="26" font-size="16" font-weight="bold" fill="#222">The five targets, and a 45 degree throw that hits each</text>
+<line x1="70.0" y1="44" x2="70.0" y2="344" stroke="#e3e3e3"/>
+<line x1="70" y1="344.0" x2="700" y2="344.0" stroke="#e3e3e3"/>
+<text x="70.0" y="362" text-anchor="middle" fill="#444">14.7</text>
+<text x="62" y="348.0" text-anchor="end" fill="#444">0.8</text>
+<line x1="196.0" y1="44" x2="196.0" y2="344" stroke="#e3e3e3"/>
+<line x1="70" y1="284.0" x2="700" y2="284.0" stroke="#e3e3e3"/>
+<text x="196.0" y="362" text-anchor="middle" fill="#444">21.5</text>
+<text x="62" y="288.0" text-anchor="end" fill="#444">1.68</text>
+<line x1="322.0" y1="44" x2="322.0" y2="344" stroke="#e3e3e3"/>
+<line x1="70" y1="224.0" x2="700" y2="224.0" stroke="#e3e3e3"/>
+<text x="322.0" y="362" text-anchor="middle" fill="#444">28.4</text>
+<text x="62" y="228.0" text-anchor="end" fill="#444">2.56</text>
+<line x1="448.0" y1="44" x2="448.0" y2="344" stroke="#e3e3e3"/>
+<line x1="70" y1="164.0" x2="700" y2="164.0" stroke="#e3e3e3"/>
+<text x="448.0" y="362" text-anchor="middle" fill="#444">35.2</text>
+<text x="62" y="168.0" text-anchor="end" fill="#444">3.44</text>
+<line x1="574.0" y1="44" x2="574.0" y2="344" stroke="#e3e3e3"/>
+<line x1="70" y1="104.0" x2="700" y2="104.0" stroke="#e3e3e3"/>
+<text x="574.0" y="362" text-anchor="middle" fill="#444">42</text>
+<text x="62" y="108.0" text-anchor="end" fill="#444">4.32</text>
+<line x1="700.0" y1="44" x2="700.0" y2="344" stroke="#e3e3e3"/>
+<line x1="70" y1="44.0" x2="700" y2="44.0" stroke="#e3e3e3"/>
+<text x="700.0" y="362" text-anchor="middle" fill="#444">48.9</text>
+<text x="62" y="48.0" text-anchor="end" fill="#444">5.2</text>
+<rect x="70" y="44" width="630" height="300" fill="none" stroke="#888"/>
+<text x="385" y="388" text-anchor="middle" fill="#222">range [m]</text>
+<text transform="translate(16 194) rotate(-90)" text-anchor="middle" fill="#222">level</text>
+<circle cx="315.3" cy="330.4" r="3" fill="#d62728"/>
+<circle cx="319.9" cy="330.4" r="3" fill="#d62728"/>
+<circle cx="324.5" cy="330.4" r="3" fill="#d62728"/>
+<circle cx="329.1" cy="330.4" r="3" fill="#d62728"/>
+<circle cx="333.7" cy="330.4" r="3" fill="#d62728"/>
+<circle cx="338.3" cy="330.4" r="3" fill="#d62728"/>
+<circle cx="342.9" cy="330.4" r="3" fill="#d62728"/>
+<circle cx="347.5" cy="330.4" r="3" fill="#d62728"/>
+<circle cx="352.1" cy="330.4" r="3" fill="#d62728"/>
+<circle cx="356.8" cy="330.4" r="3" fill="#d62728"/>
+<circle cx="361.4" cy="330.4" r="3" fill="#d62728"/>
+<circle cx="366.0" cy="330.4" r="3" fill="#d62728"/>
+<circle cx="370.6" cy="330.4" r="3" fill="#d62728"/>
+<circle cx="375.2" cy="330.4" r="3" fill="#d62728"/>
+<circle cx="379.8" cy="330.4" r="3" fill="#d62728"/>
+<circle cx="384.4" cy="330.4" r="3" fill="#d62728"/>
+<circle cx="389.0" cy="330.4" r="3" fill="#d62728"/>
+<circle cx="232.4" cy="262.2" r="3" fill="#d62728"/>
+<circle cx="237.1" cy="262.2" r="3" fill="#d62728"/>
+<circle cx="241.7" cy="262.2" r="3" fill="#d62728"/>
+<circle cx="246.3" cy="262.2" r="3" fill="#d62728"/>
+<circle cx="250.9" cy="262.2" r="3" fill="#d62728"/>
+<circle cx="255.5" cy="262.2" r="3" fill="#d62728"/>
+<circle cx="260.1" cy="262.2" r="3" fill="#d62728"/>
+<circle cx="264.7" cy="262.2" r="3" fill="#d62728"/>
+<circle cx="269.3" cy="262.2" r="3" fill="#d62728"/>
+<circle cx="273.9" cy="262.2" r="3" fill="#d62728"/>
+<circle cx="278.5" cy="262.2" r="3" fill="#d62728"/>
+<circle cx="283.1" cy="262.2" r="3" fill="#d62728"/>
+<circle cx="287.7" cy="262.2" r="3" fill="#d62728"/>
+<circle cx="398.2" cy="194.0" r="3" fill="#d62728"/>
+<circle cx="402.8" cy="194.0" r="3" fill="#d62728"/>
+<circle cx="407.4" cy="194.0" r="3" fill="#d62728"/>
+<circle cx="412.0" cy="194.0" r="3" fill="#d62728"/>
+<circle cx="416.6" cy="194.0" r="3" fill="#d62728"/>
+<circle cx="421.2" cy="194.0" r="3" fill="#d62728"/>
+<circle cx="425.8" cy="194.0" r="3" fill="#d62728"/>
+<circle cx="430.4" cy="194.0" r="3" fill="#d62728"/>
+<circle cx="435.0" cy="194.0" r="3" fill="#d62728"/>
+<circle cx="439.6" cy="194.0" r="3" fill="#d62728"/>
+<circle cx="444.2" cy="194.0" r="3" fill="#d62728"/>
+<circle cx="448.8" cy="194.0" r="3" fill="#d62728"/>
+<circle cx="453.4" cy="194.0" r="3" fill="#d62728"/>
+<circle cx="75.9" cy="125.8" r="3" fill="#d62728"/>
+<circle cx="80.5" cy="125.8" r="3" fill="#d62728"/>
+<circle cx="85.1" cy="125.8" r="3" fill="#d62728"/>
+<circle cx="89.7" cy="125.8" r="3" fill="#d62728"/>
+<circle cx="94.3" cy="125.8" r="3" fill="#d62728"/>
+<circle cx="98.9" cy="125.8" r="3" fill="#d62728"/>
+<circle cx="103.5" cy="125.8" r="3" fill="#d62728"/>
+<circle cx="108.1" cy="125.8" r="3" fill="#d62728"/>
+<circle cx="112.8" cy="125.8" r="3" fill="#d62728"/>
+<circle cx="600.7" cy="57.6" r="3" fill="#d62728"/>
+<circle cx="605.4" cy="57.6" r="3" fill="#d62728"/>
+<circle cx="610.0" cy="57.6" r="3" fill="#d62728"/>
+<circle cx="614.6" cy="57.6" r="3" fill="#d62728"/>
+<circle cx="619.2" cy="57.6" r="3" fill="#d62728"/>
+<circle cx="623.8" cy="57.6" r="3" fill="#d62728"/>
+<circle cx="628.4" cy="57.6" r="3" fill="#d62728"/>
+<circle cx="633.0" cy="57.6" r="3" fill="#d62728"/>
+<circle cx="637.6" cy="57.6" r="3" fill="#d62728"/>
+<circle cx="642.2" cy="57.6" r="3" fill="#d62728"/>
+<circle cx="646.8" cy="57.6" r="3" fill="#d62728"/>
+<circle cx="651.4" cy="57.6" r="3" fill="#d62728"/>
+<circle cx="656.0" cy="57.6" r="3" fill="#d62728"/>
+<rect x="78" y="52" width="12" height="12" fill="#d62728"/><text x="96" y="63" fill="#222">target</text>
+<circle cx="352.6" cy="330.4" r="3" fill="#1f77b4"/>
+<circle cx="257.8" cy="262.2" r="3" fill="#1f77b4"/>
+<circle cx="425.1" cy="194.0" r="3" fill="#1f77b4"/>
+<circle cx="94.8" cy="125.8" r="3" fill="#1f77b4"/>
+<circle cx="626.6" cy="57.6" r="3" fill="#1f77b4"/>
+<rect x="238" y="52" width="12" height="12" fill="#1f77b4"/><text x="256" y="63" fill="#222">landing</text>
+<circle cx="292.3" cy="330.4" r="3" fill="#999999"/>
+<circle cx="298.4" cy="262.2" r="3" fill="#999999"/>
+<circle cx="565.6" cy="194.0" r="3" fill="#999999"/>
+<circle cx="70.0" cy="125.8" r="3" fill="#999999"/>
+<circle cx="700.0" cy="57.6" r="3" fill="#999999"/>
+<rect x="398" y="52" width="12" height="12" fill="#999999"/><text x="416" y="63" fill="#222">same throw, no wind</text>
+</svg>

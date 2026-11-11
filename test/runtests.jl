@@ -55,3 +55,82 @@ end
     @test occursin("T", screen(g))
     @test play(IOBuffer("31 45\n0 45\nNaN 45\n16.5 45\n"), IOBuffer()).attempts == 1
 end
+
+"Bisection on the speed of a 45 degree throw until it lands on the centre; nothing beyond the game's own trajectory."
+function aim(level; angle=45)
+    low, high = 1.0, 30.0
+    for _ in 1:60
+        middle = (low + high) / 2
+        trajectory(middle, angle; wind=level.wind).range < level.centre ? (low = middle) : (high = middle)
+    end
+    (low + high) / 2
+end
+@testset "REQ-level fixed-seed placements, all reachable inside the input range" begin
+    placed = levels()
+    @test length(placed) == 5
+    @test placed == levels() == ArcLanding.LEVELS  # the same seed gives the same placements
+    @test levels(1) != placed && levels(1)[1] == placed[1]  # the seed moves levels 2..5 only
+    @test (placed[1].centre, placed[1].half, placed[1].wind) == (30.0, 2.0, 1.2)
+    @test_throws ArgumentError ArcLanding.Game(0)
+    @test_throws ArgumentError ArcLanding.Game(6)
+    for seed in (11, 1, 2, 3, 99), (number, level) in enumerate(levels(seed))
+        @test 12 <= level.centre <= 48 && level.half in (1.0, 1.5, 2.0) && abs(level.wind) <= 2
+        @test level.centre - level.half > 0
+        speed = aim(level)
+        @test 1.5 < speed < 29.5  # strictly inside the accepted speeds, with room to spare
+        @test abs(trajectory(speed, 45; wind=level.wind).range - level.centre) < 0.01
+        @test ArcLanding.hit(level, level.centre - level.half) && ArcLanding.hit(level, level.centre + level.half)
+        @test !ArcLanding.hit(level, prevfloat(level.centre - level.half)) && !ArcLanding.hit(level, NaN)
+        # more than one way in: a second angle also reaches it, and a rounded entry still hits
+        @test abs(trajectory(aim(level; angle=30), 30; wind=level.wind).range - level.centre) < 0.01
+        @test ArcLanding.hit(level, trajectory(round(speed; digits=1), 45; wind=level.wind).range)
+        if seed == 11
+            won = shoot(ArcLanding.Game(number), round(speed; digits=1), 45)
+            @test won.won && won.level == number && occursin("ON TARGET", won.last)
+        end
+    end
+end
+@testset "REQ-reason why a throw missed, and the wind's share" begin
+    for (number, level) in enumerate(levels())
+        speed = aim(level)
+        for (factor, word) in ((0.8, "SHORT by "), (1.2, "LONG by "))
+            thrown = shoot(ArcLanding.Game(number), factor * speed, 45)
+            range = trajectory(factor * speed, 45; wind=level.wind).range
+            calm = trajectory(factor * speed, 45; wind=0).range
+            edge = word == "SHORT by " ? level.centre - level.half - range : range - level.centre - level.half
+            @test !thrown.won && edge > 0
+            @test occursin(word * string(round(edge; digits=2)) * " m", thrown.last)
+            sign = range - calm < 0 ? "-" : "+"
+            @test occursin("Wind moved the landing " * sign * string(round(abs(range - calm); digits=2)) * " m", thrown.last)
+            @test occursin("without wind: " * string(round(calm; digits=2)) * " m", thrown.last)
+            @test (range > calm) == (level.wind > 0) || level.wind == 0
+        end
+    end
+    @test occursin("to LEFT", screen(ArcLanding.Game(findfirst(l -> l.wind < 0, levels()))))
+end
+@testset "REQ-retry nothing of the previous attempt remains" begin
+    same(a, b) = (a.level, a.attempts, a.won, a.last, a.points) == (b.level, b.attempts, b.won, b.last, b.points)
+    for number in 1:5
+        fresh = ArcLanding.Game(number)
+        played = shoot(shoot(fresh, 5, 45), 6, 30)
+        @test played.attempts == 2 && !isempty(played.points)
+        @test same(restart(played), fresh) && screen(restart(played)) == screen(fresh)
+        @test same(next_level(played), ArcLanding.Game(mod1(number + 1, 5)))
+        rows = filter(startswith("|"), split(screen(restart(played)), "\n"))
+        @test length(rows) == 7 && !any(occursin("*"), rows) && !occursin("Landed", screen(next_level(played)))
+        lost = shoot(played, 5, 45)
+        @test occursin("LOST", screen(lost)) && shoot(lost, 16.5, 45) === lost
+        @test same(restart(lost), fresh)
+    end
+    @test restart(ArcLanding.Game()).points !== ArcLanding.Game().points
+    # through the real loop: lose level 1, retry and win; n goes on; a throw at a finished level is ignored
+    g = play(IOBuffer("1 1\n1 1\n1 1\n16.5 45\nr\n16.5 45\n"), IOBuffer())
+    @test g.won && g.level == 1 && g.attempts == 1
+    out = IOBuffer()
+    g = play(IOBuffer("16.5 45\n10 45\nn\n10 45\nn\nn\nn\nn\n"), out)
+    @test g.level == 1 && g.attempts == 0 && !g.won  # five times n comes back round to level 1
+    text = String(take!(out))
+    @test occursin("level 2/5", text) && occursin("level 5/5", text)
+    @test count("throws 2/3", text) == 0  # the throw after the win was not counted on level 1
+    @test play(IOBuffer("r\nn\nq\n16.5 45\n"), IOBuffer()).attempts == 0
+end

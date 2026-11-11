@@ -178,6 +178,46 @@ let
     value("screen-stars", "columns holding at least one star: the flight is drawn from measured points", count(c -> any(r -> r[c] == '*', rows), 2:52), 0.0)
 end
 
+# S09: the five placements, their reachability, and the clean restart.
+let placed = levels()
+    function aim(level; angle=45)
+        low, high = 1.0, 30.0
+        for _ in 1:60
+            middle = (low + high) / 2
+            trajectory(middle, angle; wind=level.wind).range < level.centre ? (low = middle) : (high = middle)
+        end
+        (low + high) / 2
+    end
+    speeds = [aim(l) for l in placed]
+    tx = Float64[]; ty = Float64[]
+    for (n, l) in enumerate(placed), x in (l.centre - l.half):0.25:(l.centre + l.half)
+        push!(tx, x); push!(ty, n)
+    end
+    landed = [trajectory(round(s; digits=1), 45; wind=l.wind).range for (s, l) in zip(speeds, placed)]
+    calm = [trajectory(round(s; digits=1), 45; wind=0).range for s in speeds]
+    plot("levels.svg", "The five targets, and a 45 degree throw that hits each", "range [m]", "level",
+         [("target", "#d62728", tx, ty, true), ("landing", "#1f77b4", landed, collect(1.0:5.0), true), ("same throw, no wind", "#999999", calm, collect(1.0:5.0), true)])
+    value("level-count", "placements (theory 5)", length(placed), 5.0)
+    value("level-first", "centre of level 1 [m] (theory 30: the M2 game)", placed[1].centre, 30.0)
+    value("level-same-seed", "levels() called twice gives equal placements (theory 1)", placed == levels(), 1.0)
+    value("level-other-seed", "placements 2..5 that differ under seed 1 (reported)", count(k -> levels(1)[k] != placed[k], 2:5), 0.0)
+    value("level-reachable", "levels hit by a 45 degree throw at a speed rounded to 0.1 m/s (theory 5)", count(k -> ArcLanding.hit(placed[k], landed[k]), 1:5), 5.0)
+    value("level-speed-low", "smallest of those five speeds [m/s] (allowed: 1..30)", minimum(speeds), 0.0)
+    value("level-speed-high", "largest of those five speeds [m/s] (allowed: 1..30)", maximum(speeds), 0.0)
+    value("level-wind-low", "most leftward wind of the five [m/s^2] (allowed: -3..3)", minimum(l.wind for l in placed), 0.0)
+    value("level-wind-high", "most rightward wind of the five [m/s^2]", maximum(l.wind for l in placed), 0.0)
+    g = shoot(ArcLanding.Game(), 16.5, 45)
+    value("reason-wind", "wind share reported for the demonstration throw [m]: range with wind minus range without", trajectory(16.5, 45).range - trajectory(16.5, 45; wind=0).range, 0.0)
+    value("reason-shown", "the message of that throw names the wind share (theory 1)", occursin("Wind moved the landing +3.39 m", g.last), 1.0)
+    played = shoot(shoot(ArcLanding.Game(3), 5, 45), 6, 30)
+    again, fresh = restart(played), ArcLanding.Game(3)
+    value("restart-clean", "after two throws, restart equals a fresh game on the same level: attempts, message, points (theory 1)", (again.level, again.attempts, again.won, again.last, again.points) == (fresh.level, fresh.attempts, fresh.won, fresh.last, fresh.points), 1.0)
+    value("restart-attempts", "attempts after restart (theory 0)", again.attempts, 0.0)
+    value("next-level", "level after next_level from level 3 (theory 4)", next_level(played).level, 4.0)
+    value("next-wraps", "level after next_level from level 5 (theory 1)", next_level(ArcLanding.Game(5)).level, 1.0)
+    value("finished-ignores", "throws counted when a throw is entered after a win, in the real loop (theory 1)", play(IOBuffer("16.5 45\n10 45\n"), IOBuffer()).attempts, 1.0)
+end
+
 open(joinpath(DIR, "values.md"), "w") do io
     println(io, "# Measured values\n\nWritten by `make theory-figs` (scripts/theory_figs.jl) from the functions of src/ArcLanding.jl. Do not edit by hand.")
     println(io, "SI units; gravity 9.81 m/s^2. The last column is the relative error; where the theory column is 0 it is the absolute value.\n")
