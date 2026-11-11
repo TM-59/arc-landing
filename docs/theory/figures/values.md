@@ -44,3 +44,19 @@ SI units; gravity 9.81 m/s^2. The last column is the relative error; where the t
 | `screen-width` | characters per row after the axis bar (theory 51) | 51 | 51 | 0.00e+00 |
 | `screen-target` | T characters on the bottom row: the target 28..32 m at 40 m per 50 columns (theory 6 columns) | 6 | 6 | 0.00e+00 |
 | `screen-stars` | columns holding at least one star: the flight is drawn from measured points | 39 | 0 | 3.90e+01 |
+| `level-count` | placements (theory 5) | 5 | 5 | 0.00e+00 |
+| `level-first` | centre of level 1 [m] (theory 30: the M2 game) | 30 | 30 | 0.00e+00 |
+| `level-same-seed` | levels() called twice gives equal placements (theory 1) | 1 | 1 | 0.00e+00 |
+| `level-other-seed` | placements 2..5 that differ under seed 1 (reported) | 4 | 0 | 4.00e+00 |
+| `level-reachable` | levels hit by a 45 degree throw at a speed rounded to 0.1 m/s (theory 5) | 5 | 5 | 0.00e+00 |
+| `level-speed-low` | smallest of those five speeds [m/s] (allowed: 1..30) | 11.990613 | 0 | 1.20e+01 |
+| `level-speed-high` | largest of those five speeds [m/s] (allowed: 1..30) | 21.923662 | 0 | 2.19e+01 |
+| `level-wind-low` | most leftward wind of the five [m/s^2] (allowed: -3..3) | -1.8 | 0 | 1.80e+00 |
+| `level-wind-high` | most rightward wind of the five [m/s^2] | 1.2 | 0 | 1.20e+00 |
+| `reason-wind` | wind share reported for the demonstration throw [m]: range with wind minus range without | 3.3947607 | 0 | 3.39e+00 |
+| `reason-shown` | the message of that throw names the wind share (theory 1) | 1 | 1 | 0.00e+00 |
+| `restart-clean` | after two throws, restart equals a fresh game on the same level: attempts, message, points (theory 1) | 1 | 1 | 0.00e+00 |
+| `restart-attempts` | attempts after restart (theory 0) | 0 | 0 | 0.00e+00 |
+| `next-level` | level after next_level from level 3 (theory 4) | 4 | 4 | 0.00e+00 |
+| `next-wraps` | level after next_level from level 5 (theory 1) | 1 | 1 | 0.00e+00 |
+| `finished-ignores` | throws counted when a throw is entered after a win, in the real loop (theory 1) | 1 | 1 | 0.00e+00 |
