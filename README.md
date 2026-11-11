@@ -8,6 +8,8 @@ Wind is a constant **+1.2 m/s² horizontal acceleration** to the right. Julia in
 
 Captured from the real CLI demo on 2026-11-06; its stdout is rendered in a monospace viewer for the image. The game runs in a terminal.
 
+**Theory handbook**: [docs/theory/](docs/theory/README.md) — 8 statements (projectile motion, the wind as a constant acceleration, why the step is exact, the interpolated landing and its error, the shortened step, the target and turns, input validation, the character plot), each with its equation, assumptions, derivation, code, tests and a figure. `make theory-figs` regenerates the figures and the measured values; `make theory-check` checks the coverage table.
+
 ## Install and play
 
 Linux x86-64, no sudo or containers. Install the current stable runtime as checked on 2026-11-06 ([Julia manual downloads](https://julialang.org/downloads/manual-downloads/)).
