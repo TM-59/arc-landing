@@ -11,7 +11,7 @@ theory-figs:
 
 # Fails when a statement of docs/theory has no figure, a link is broken, or a referenced function or test is gone.
 theory-check:
-	$(PYTHON) scripts/theory-check.py
+	$(PYTHON) scripts/theory_check.py
 
 # Formatter, linter and type checker: JuliaFormatter, Aqua and JET (pinned in style/Manifest.toml)
 # for Julia; Ruff (every rule) and mypy strict for the Python scripts (pinned in uv.lock). No ignores.
