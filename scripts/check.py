@@ -5,6 +5,7 @@ import datetime as dt
 import json
 import os
 import platform
+import shutil
 import subprocess as sp
 import sys
 import time
@@ -14,8 +15,21 @@ from pathlib import Path
 from defusedxml import ElementTree
 
 TIMEOUT_SECONDS = 180
+
+
+def tool(name: str) -> str:
+    """Return the absolute path of program `name` on PATH, or stop with a clear message."""
+    path = shutil.which(name)
+    if path is None:
+        message = f"{name} was not found on PATH; install it (see README) and run again"
+        raise SystemExit(message)
+    return path
+
+
+JULIA = tool("julia")
+GIT = tool("git")
 UNIT_COMMAND = [
-    "julia",
+    JULIA,
     "--project=scripts/report",
     "--startup-file=no",
     "-e",
@@ -24,7 +38,7 @@ UNIT_COMMAND = [
         'logfilepath=ENV["RESULT_DIR"], logfilename="unit.xml")'
     ),
 ]
-PLAY_COMMAND = ["julia", "--project=.", "--startup-file=no", "-e", "using ArcLanding; play()"]
+PLAY_COMMAND = [JULIA, "--project=.", "--startup-file=no", "-e", "using ArcLanding; play()"]
 
 cfg = json.loads(Path("scripts/commands.json").read_text())
 mode = sys.argv[1]
@@ -33,7 +47,7 @@ mode = sys.argv[1]
 def play(demo_input: str | None) -> int:
     """Run the game in the terminal, optionally feeding the demo input; return its exit code."""
     return sp.run(
-        ["julia", "--project=.", "--startup-file=no", "-e", "using ArcLanding; play()"],
+        PLAY_COMMAND,
         input=demo_input,
         text=True,
         check=False,
@@ -43,16 +57,7 @@ def play(demo_input: str | None) -> int:
 def run_unit(env: dict[str, str]) -> sp.CompletedProcess[str]:
     """Run the package tests and write a JUnit report through TestReports."""
     return sp.run(
-        [
-            "julia",
-            "--project=scripts/report",
-            "--startup-file=no",
-            "-e",
-            (
-                'using TestReports; TestReports.test("ArcLanding"; '
-                'logfilepath=ENV["RESULT_DIR"], logfilename="unit.xml")'
-            ),
-        ],
+        UNIT_COMMAND,
         env=env,
         text=True,
         capture_output=True,
@@ -64,7 +69,7 @@ def run_unit(env: dict[str, str]) -> sp.CompletedProcess[str]:
 def run_e2e(env: dict[str, str]) -> sp.CompletedProcess[str]:
     """Play the demo input through the real terminal program."""
     return sp.run(
-        ["julia", "--project=.", "--startup-file=no", "-e", "using ArcLanding; play()"],
+        PLAY_COMMAND,
         env=env,
         input=cfg["demo"],
         text=True,
@@ -146,8 +151,8 @@ summary = {
     "schema_version": 1,
     "run_id": run_id,
     "repository": cfg["repository"],
-    "commit": sp.check_output(["git", "rev-parse", "HEAD"], text=True).strip(),
-    "dirty": bool(sp.check_output(["git", "status", "--porcelain"])),
+    "commit": sp.check_output([GIT, "rev-parse", "HEAD"], text=True).strip(),
+    "dirty": bool(sp.check_output([GIT, "status", "--porcelain"])),
     "started_at": started.isoformat(),
     "finished_at": finished.isoformat(),
     "duration_seconds": (finished - started).total_seconds(),
