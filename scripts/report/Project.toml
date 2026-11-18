@@ -1,0 +1,6 @@
+[deps]
+ArcLanding = "e732a8ab-e263-47b7-b7f1-24c7b9fb3904"
+TestReports = "dcd651b4-b50a-5b6b-8f22-87e9f253a252"
+
+[sources]
+ArcLanding = {path = "../.."}

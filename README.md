@@ -22,18 +22,20 @@ mkdir -p "$HOME/.local"
 tar xzf julia-1.13.3-linux-x86_64.tar.gz -C "$HOME/.local"
 export PATH="$HOME/.local/julia-1.13.3/bin:$PATH"
 julia --project=. --startup-file=no -e 'using Pkg; Pkg.instantiate()'
+julia --project=scripts/report --startup-file=no -e 'using Pkg; Pkg.instantiate()'
 ```
 
-Python 3.14 is required by the local report adapter. From this repository:
+The local report adapter runs on Python 3.14 through [uv](https://docs.astral.sh/uv/) (`uv run --locked`); the tests write JUnit through TestReports in the `scripts/report` environment. From this repository:
 
 ```sh
 make play
 make demo
 make test
 make check
+make check-style   # JuliaFormatter, Aqua, JET; Ruff and mypy for scripts/
 ```
 
-`test` runs native unit tests; `check` also drives a real CLI victory. JUnit XML and schema-versioned summary JSON go to ignored `test-results/`. No test contacts a live service. PR CI runs unit checks only.
+`test` runs native unit tests; `check` also drives a real CLI victory. JUnit XML and schema-versioned summary JSON go to ignored `test-results/`. No test contacts a live service. PR CI runs `make check-style` and the unit tests only.
 
 M3 is implemented: five fixed-seed levels, the reason for a miss, retry and next. Terminal accessibility, Windows and macOS execution, long sessions and player enjoyment are unverified.
 
