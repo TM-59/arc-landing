@@ -1,0 +1,2 @@
+# JuliaFormatter default style; the same settings for every Julia file in this repository.
+style = "default"
