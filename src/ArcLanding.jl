@@ -186,10 +186,12 @@ function play(input::IO = stdin, output::IO = stdout)
         line == "r" && (game = restart(game); continue)
         line == "n" && (game = next_level(game); continue)
         finished(game) && continue
-        values = tryparse.(Float64, split(line))
-        if length(values) == 2 && all(x -> x !== nothing, values)
+        parts = split(line)
+        speed = length(parts) == 2 ? tryparse(Float64, parts[1]) : nothing
+        angle = length(parts) == 2 ? tryparse(Float64, parts[2]) : nothing
+        if speed !== nothing && angle !== nothing
             try
-                game = shoot(game, values...)
+                game = shoot(game, speed, angle)
                 continue
             catch error
                 error isa ArgumentError || rethrow()
