@@ -1,11 +1,10 @@
-# Generated dependency updates; weekly, grouped minor/patch, separate major.
+# Generated dependency updates; monthly, grouped minor/patch, separate major.
 version: 2
 updates:
   - package-ecosystem: "uv"
     directory: "/"
     schedule:
-      interval: "weekly"
-      day: "monday"
+      interval: "monthly"
       time: "09:00"
       timezone: "Asia/Tokyo"
     open-pull-requests-limit: 3
@@ -19,8 +18,7 @@ updates:
       - "/scripts/report"
       - "/style"
     schedule:
-      interval: "weekly"
-      day: "monday"
+      interval: "monthly"
       time: "09:00"
       timezone: "Asia/Tokyo"
     open-pull-requests-limit: 3
@@ -31,8 +29,7 @@ updates:
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
-      interval: "weekly"
-      day: "monday"
+      interval: "monthly"
       time: "09:00"
       timezone: "Asia/Tokyo"
     open-pull-requests-limit: 3
